@@ -14,6 +14,7 @@ export default function Home() {
         <div className="flex flex-row justify-around">
           <div className="mt-5 mx-auto flex justify-center">
             <p className="text-4xl font-medium">Next Day Meal</p>
+            {/* Images will be added here. */}
           </div>
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
@@ -34,9 +35,9 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label htmlFor="company-size" className="block text-sm font-medium text-gray-700">Company size</label>
+                  <label htmlFor="meal-time" className="block text-sm font-medium text-gray-700">Meal Time</label>
                   <div className="mt-1">
-                    <select name="company-size" id="company-size" className="">
+                    <select name="meal-time" id="meal-time" className="">
                       <option value="">Please select time</option>
                       <option value="small">Lunch</option>
                       <option value="medium">Dinner</option>

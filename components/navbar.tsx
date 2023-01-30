@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+// more navbar items will be added
 const navLinks: Object = {'Home': '/', 'Notice': '/notice', 'Register Token': '/register-token', 'Review': '/review'};
 export default function Navbar() {
 	return (

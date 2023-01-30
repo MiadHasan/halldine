@@ -9,6 +9,7 @@ export default function Home() {
       </Head>
       <Layout>
         <h1>Register Token</h1>
+        {/* token register form will be added */}
       </Layout>
     </>
   );

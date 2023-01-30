@@ -9,6 +9,7 @@ export default function Home() {
       </Head>
       <Layout>
         <h1>Notice</h1>
+        {/* notices and create notice form will be added */}
       </Layout>
     </>
   );

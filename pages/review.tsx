@@ -9,6 +9,7 @@ export default function Home() {
       </Head>
       <Layout>
         <h1>Review</h1>
+        {/* review and review creation form will be added */}
       </Layout>
     </>
   );
