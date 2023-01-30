@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    [type="text"],
+    [type="email"],
+    [type="url"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="datetime-local"],
+    [type="month"],
+    [type="search"],
+    [type="tel"],
+    [type="time"],
+    [type="week"],
+    [multiple],
+    textarea,
+    select {
+      @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-teal-100 focus:ring-teal-100;
+    }
+    [type="checkbox"],
+    [type="radio"] {
+      @apply border-gray-300 rounded text-indigo-600 focus:ring-indigo-500;
+    }
+  }
