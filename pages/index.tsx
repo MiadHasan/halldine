@@ -12,10 +12,33 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="flex flex-row justify-around">
-          <div className="mt-5 mx-auto flex justify-center">
+            {/* items showing start */}
+          <div className="mt-5 mx-auto flex flex-col justify-center items-center">
             <p className="text-4xl font-medium">Next Day Meal</p>
-            {/* Images will be added here. */}
+            {/* meal time showing cards */}
+            <div className="flex flex-row justify-evenly items-center"><p className="text-2xl">Lunch</p>
+              <div className="flex flex-col justify-center items-center p-6">
+                <img className="max-w-xs" src="https://i.kym-cdn.com/entries/icons/original/000/013/604/thisisbait.png" />
+                <h3>Item 1</h3>
+              </div>
+              <div className="flex flex-col justify-center items-center p-6">
+                <img className="max-w-xs" src="https://i.kym-cdn.com/entries/icons/original/000/013/604/thisisbait.png" />
+                <h3>Item 1</h3>
+              </div>
+            </div>
+            {/* meal time showing cards end*/}
+            <div className="flex flex-row justify-evenly items-center"><p className="text-2xl">Dinner</p>
+              <div className="flex flex-col justify-center items-center p-6">
+                <img className="max-w-xs" src="https://i.kym-cdn.com/entries/icons/original/000/013/604/thisisbait.png" />
+                <h3>Item 1</h3>
+              </div>
+              <div className="flex flex-col justify-center items-center p-6">
+                <img className="max-w-xs" src="https://i.kym-cdn.com/entries/icons/original/000/013/604/thisisbait.png" />
+                <h3>Item 1</h3>
+              </div>
+            </div>
           </div>
+          {/* items showing end */}
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <p className="flex justify-center mb-8 text-4xl font-sans">Add Meal Item</p>
