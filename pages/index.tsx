@@ -1,10 +1,24 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
 import { initFirebase } from "../lib/firebase/initFIrebase";
+import { useRef, useState } from "react";
+import UploadFile from '@/components/storage/uploadFile';
 
 initFirebase()
 
 export default function Home() {
+  const inputEl = useRef<HTMLInputElement>(null);
+  const [formEl, setformEl]  = useState({itemName: '', file: '', mealTime: ''});
+  
+  //unloading on submit
+  const onButtonClick = (e: any) => {
+    e.preventDefault();
+    console.log('click', inputEl.current);
+    if (!inputEl.current || !inputEl.current.files) return;
+    console.log('reached')
+    UploadFile(inputEl.current.files[0]);
+    setformEl({...formEl, itemName: '', file: '', mealTime: ''});
+  }
   return (
     <>
       <Head>
@@ -23,30 +37,30 @@ export default function Home() {
                 <div>
                   <label htmlFor="item-name" className="block text-sm font-medium text-gray-700">Item Name</label>
                   <div className="mt-1">
-                    <input id="item-name" name="item-name" type="text" autoComplete="item-name" required className="" />
+                    <input id="item-name" value={formEl.itemName} onChange={(e: any) => setformEl({...formEl, itemName: e.target.value})} name="item-name" type="text" autoComplete="item-name" required className="" />
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="file" className="block text-sm font-medium text-gray-700">Upload Image</label>
                   <div className="mt-1">
-                    <input id="file" name="file" type="file" autoComplete="file" required className="" />
+                    <input id="file" value={formEl.file} onChange={(e: any) => setformEl({...formEl, file: e.target.value})} ref={inputEl} name="file" type="file" autoComplete="file" required className="" />
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="meal-time" className="block text-sm font-medium text-gray-700">Meal Time</label>
                   <div className="mt-1">
-                    <select name="meal-time" id="meal-time" className="">
-                      <option value="">Please select time</option>
-                      <option value="small">Lunch</option>
-                      <option value="medium">Dinner</option>
+                    <select name="meal-time" value={formEl.mealTime} onChange={(e: any) => setformEl({...formEl, mealTime: e.target.value})} id="meal-time" className="">
+                      <option value=''>Please select time</option>
+                      <option value='lunch'>Lunch</option>
+                      <option value='dinner'>Dinner</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button type="submit" onClick={onButtonClick} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Submit
                   </button>
                 </div>
