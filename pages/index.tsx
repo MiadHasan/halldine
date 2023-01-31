@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
+import showCardMeal from "@/components/showCardMeal";
 import { initFirebase } from "../lib/firebase/initFIrebase";
 import { useRef, useState } from "react";
 import UploadFile from '@/components/storage/uploadFile';
@@ -26,11 +27,23 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="flex flex-row justify-around">
-          <div className="mt-5 mx-auto flex justify-center">
+            {/* items showing start */}
+          <div className="nexDayMeal m-5 flex flex-col flex-1 justify-center items-center">
             <p className="text-4xl font-medium">Next Day Meal</p>
-            {/* Images will be added here. */}
+            {/* meal time showing cards */}
+            <div className="flex flex-1 flex-row justify-evenly items-center"><p className="text-2xl p-4">Lunch</p>
+              {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 1")}
+              {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
+            </div>
+            {/* meal time showing cards end*/}
+            <div className="flex flex-1 flex-row justify-evenly items-center mt-8"><p className="text-2xl p-4">Dinner</p>
+            {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 1")}
+            {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
+            </div>
           </div>
-          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          {/* items showing end */}
+          {/* <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"> */}
+          <div className="mt-4 flex flex-col flex-2 justify-start">
             <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <p className="flex justify-center mb-8 text-4xl font-sans">Add Meal Item</p>
               <form className="mb-0 space-y-6" action="#" method="POST">
