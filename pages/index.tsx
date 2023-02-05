@@ -2,22 +2,48 @@ import Head from "next/head";
 import Layout from "@/components/layout";
 import showCardMeal from "@/components/showCardMeal";
 import { initFirebase } from "../lib/firebase/initFIrebase";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import UploadFile from '@/components/storage/uploadFile';
+import UploadMealInfo from "@/components/cloudFirestore/uploadMealInfo";
+import { mealType, allMealType } from '@/lib/types/types';
+import { GetDinnerItems, GetLunchItems} from "@/components/cloudFirestore/getMealInfo";
 
 initFirebase()
 
+// export async function getServerSideProps () {
+//   const lunchItems = GetLunchItems();
+//   const dinnerItems = GetDinnerItems();
+//   console.log(lunchItems)
+//   console.log('dinner', dinnerItems)
+//   //will be added as props { lunchItems, dinnerItems}: {lunchItems: allMealType[], dinnerItems: allMealType[]}
+//   return {
+//     props: {
+//       lunchItems,
+//       dinnerItems
+//     }
+//   }
+// }
+GetLunchItems();
 export default function Home() {
   const inputEl = useRef<HTMLInputElement>(null);
   const [formEl, setformEl]  = useState({itemName: '', file: '', mealTime: ''});
   
+  const setMealInfo = (imageUrl: string) => {
+    console.log(imageUrl)
+    const mealInfo: mealType = {
+      name: formEl.itemName,
+      imageUrl: imageUrl,
+      mealTime: formEl.mealTime
+    };
+
+    UploadMealInfo(mealInfo);
+  }
   //unloading on submit
   const onButtonClick = (e: any) => {
     e.preventDefault();
-    console.log('click', inputEl.current);
     if (!inputEl.current || !inputEl.current.files) return;
-    console.log('reached')
-    UploadFile(inputEl.current.files[0]);
+    
+    UploadFile(inputEl.current.files[0], setMealInfo);
     setformEl({...formEl, itemName: '', file: '', mealTime: ''});
   }
   return (
@@ -32,12 +58,12 @@ export default function Home() {
             <p className="text-4xl font-medium">Next Day Meal</p>
             {/* meal time showing cards */}
             <div className="flex flex-1 flex-row justify-evenly items-center"><p className="text-2xl p-4">Lunch</p>
-              {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 1")}
+              {/*showCardMeal(lunchItems[0].imageUrl, lunchItems[0].name)*/}
               {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
             </div>
             {/* meal time showing cards end*/}
             <div className="flex flex-1 flex-row justify-evenly items-center mt-8"><p className="text-2xl p-4">Dinner</p>
-            {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 1")}
+            {/*showCardMeal(dinnerItems[0].imageUrl, dinnerItems[0].name)*/}
             {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
             </div>
           </div>

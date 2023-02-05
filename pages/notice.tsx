@@ -16,7 +16,7 @@ export default function Home() {
         <div className="flex flex-row justify-around">
           <div className="mt-5 flex flex-col flex-1 justify-start items-center">
             <p className="text-4xl font-medium">Notices</p>
-            {showNotice(title,description,null)}
+            {showNotice(title,description,'')}
             {showNotice(title,description,src)}
             {showNotice(title,description,src)}
             {showNotice(title,description,src)}

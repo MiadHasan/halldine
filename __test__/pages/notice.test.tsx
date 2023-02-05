@@ -11,4 +11,9 @@ describe('Notice', () => {
     const headingText = 'Notice';
     expect(heading).toHaveTextContent(headingText);
   })
+
+  // it('check input', () => {
+  //   render(<Notice />)
+  //   const inputCheck = screen
+  // })
 })
