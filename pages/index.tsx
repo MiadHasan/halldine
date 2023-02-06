@@ -1,45 +1,58 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import showCardMeal from "@/components/showCardMeal";
-import { initFirebase } from "../lib/firebase/initFIrebase";
+import ShowCardMeal from "@/components/showCardMeal";
 import { useRef, useState, useEffect } from "react";
 import UploadFile from '@/components/storage/uploadFile';
 import UploadMealInfo from "@/components/cloudFirestore/uploadMealInfo";
 import { mealType, allMealType } from '@/lib/types/types';
 import { GetDinnerItems, GetLunchItems} from "@/components/cloudFirestore/getMealInfo";
+import DeleteMeal from "@/components/cloudFirestore/deleteMeal";
 
-initFirebase()
 
-// export async function getServerSideProps () {
-//   const lunchItems = GetLunchItems();
-//   const dinnerItems = GetDinnerItems();
-//   console.log(lunchItems)
-//   console.log('dinner', dinnerItems)
-//   //will be added as props { lunchItems, dinnerItems}: {lunchItems: allMealType[], dinnerItems: allMealType[]}
-//   return {
-//     props: {
-//       lunchItems,
-//       dinnerItems
-//     }
-//   }
-// }
-GetLunchItems();
-export default function Home() {
+
+export async function getServerSideProps () {
+  const lunchItems: allMealType[] = await GetLunchItems();
+  const dinnerItems: allMealType[] = await GetDinnerItems();
+  return {
+    props: {
+      lunchItems,
+      dinnerItems
+    }
+  }
+}
+//GetLunchItems();
+export default function Home({ lunchItems, dinnerItems}: {lunchItems: allMealType[], dinnerItems: allMealType[]}) {
   const inputEl = useRef<HTMLInputElement>(null);
   const [formEl, setformEl]  = useState({itemName: '', file: '', mealTime: ''});
+  const [lunchMenu, setLunchMenu] = useState(lunchItems);
+  const [dinnerMenu, setDinnerMenu] = useState(dinnerItems);
   
-  const setMealInfo = (imageUrl: string) => {
-    console.log(imageUrl)
+  const setMealInfo = async (imageUrl: string) => {
     const mealInfo: mealType = {
       name: formEl.itemName,
       imageUrl: imageUrl,
       mealTime: formEl.mealTime
     };
 
-    UploadMealInfo(mealInfo);
+    await UploadMealInfo(mealInfo);
+    if (mealInfo.mealTime == "lunch") {
+      setLunchMenu(await GetLunchItems());
+    } else if (mealInfo.mealTime == "dinner") {
+      setDinnerMenu(await GetDinnerItems());
+    }
   }
+
+  const handleDelete = async (id: string, time: string) => {
+    await DeleteMeal(id, time);
+    if (time == "lunch") {
+      setLunchMenu(await GetLunchItems());
+    } else if (time == "dinner") {
+      setDinnerMenu(await GetDinnerItems());
+    }
+  }
+
   //unloading on submit
-  const onButtonClick = (e: any) => {
+  const onSubmitButtonClick = (e: any) => {
     e.preventDefault();
     if (!inputEl.current || !inputEl.current.files) return;
     
@@ -57,14 +70,22 @@ export default function Home() {
           <div className="nexDayMeal m-5 flex flex-col flex-1 justify-center items-center">
             <p className="text-4xl font-medium">Next Day Meal</p>
             {/* meal time showing cards */}
-            <div className="flex flex-1 flex-row justify-evenly items-center"><p className="text-2xl p-4">Lunch</p>
-              {/*showCardMeal(lunchItems[0].imageUrl, lunchItems[0].name)*/}
-              {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
+            <div className="flex flex-1 flex-col justify-evenly items-center">
+              <p className="text-2xl p-4">Lunch</p>
+              <div className="flex">
+                {lunchMenu.map((item) => (
+                  <ShowCardMeal key={item.id} onDelete={handleDelete} id={item.id} time={"lunch"} name={item.name} imageUrl={item.imageUrl} />
+                ))}
+              </div>
             </div>
             {/* meal time showing cards end*/}
-            <div className="flex flex-1 flex-row justify-evenly items-center mt-8"><p className="text-2xl p-4">Dinner</p>
-            {/*showCardMeal(dinnerItems[0].imageUrl, dinnerItems[0].name)*/}
-            {showCardMeal("https://img.freepik.com/free-vector/hand-drawn-food-elements_1411-48.jpg","Item 2")}
+            <div className="flex flex-1 flex-col justify-evenly items-center mt-8">
+              <p className="text-2xl p-4">Dinner</p>
+              <div className="flex">
+                {dinnerMenu.map((item) => (
+                  <ShowCardMeal key={item.id} onDelete={handleDelete} id={item.id} time={"dinner"} name={item.name} imageUrl={item.imageUrl} />
+                ))}
+              </div>
             </div>
           </div>
           {/* items showing end */}
@@ -99,7 +120,7 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <button type="submit" onClick={onButtonClick} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button type="submit" onClick={onSubmitButtonClick} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                     Submit
                   </button>
                 </div>

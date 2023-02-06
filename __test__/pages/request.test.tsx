@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react'
-import Notice from '@/pages/notice'
+import Request from '@/pages/request'
 import '@testing-library/jest-dom'
 import React from 'react'
 
-describe('Notice', () => {
+describe('Request', () => {
   it('renders a heading tag', () => {
-    render(<Notice />)
+    render(<Request />)
 
-    const heading = screen.getByRole('heading');
-    const headingText = 'Notice';
+    const heading = screen.getByTestId('title')
+    const headingText = 'Request';
     expect(heading).toHaveTextContent(headingText);
   })
 })

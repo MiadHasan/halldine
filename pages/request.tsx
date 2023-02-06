@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
 import showRequest from "@/components/showRequest";
-import { initFirebase } from "../lib/firebase/initFIrebase";
 
 export default function Home() {
     const hall = "DR QK Hall"
@@ -10,7 +9,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Review </title>
+                <title id="title">Request</title>
             </Head>
             <Layout>
                 <div className="flex flex-row justify-around">

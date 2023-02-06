@@ -6,5 +6,6 @@ export interface mealType {
 
 export interface allMealType {
     name: string,
-    imageUrl: string
+    imageUrl: string,
+    id: string
 }

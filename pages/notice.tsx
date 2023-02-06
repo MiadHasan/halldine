@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
 import showNotice from "@/components/showNotice";
-import { initFirebase } from "../lib/firebase/initFIrebase";
 
 export default function Home() {
   const title = "Notice Title "
