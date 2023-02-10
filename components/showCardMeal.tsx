@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { allMealType } from "@/lib/types/types";
 
 export default function ShowCardMeal({ name, imageUrl, id, onDelete, time }: {name: string, imageUrl: string, id: string, time: string, onDelete: (id: string, time: string) => void}){
   return(
