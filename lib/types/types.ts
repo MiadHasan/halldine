@@ -14,3 +14,20 @@ export interface noticeType {
     description: string,
     imageUrl: string
 }
+
+export interface tokenRegistrationType {
+    id: number | string,
+    name: string,
+    email: string,
+    start: Date | string,
+    end: Date | string,
+    transactionId: string,
+    varified: boolean
+}
+
+export interface reviewType {
+    id: string | number,
+    name: string,
+    title: string,
+    description: string
+}
