@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // more navbar items will be added
-const navLinks: Object = { 'Home': '/', 'Notice': '/notice', 'Register Token': '/register-token', 'Review': '/review', 'Request': '/request' };
+const navLinks: Object = { 'Home': '/', 'Notice': '/notice', 'Register Token': '/register-token', 'Review': '/review', 'Request': '/request','Students': '/studentList', 'Verify': '/verifyStudents' };
 export default function Navbar() {
 	return (
 		<div className="flex flex-row justify-around items-center bg-[#ddeceb] h-16">
