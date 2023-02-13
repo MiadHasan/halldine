@@ -31,3 +31,10 @@ export interface reviewType {
     title: string,
     description: string
 }
+
+export interface requestType {
+    hallName: string,
+    itemName: string,
+    quantity: string,
+    requestId ?: string,
+}

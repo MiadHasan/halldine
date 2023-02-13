@@ -5,8 +5,9 @@ import { useRef, useState } from "react";
 import UploadFile from "@/components/storage/uploadFile";
 import UploadData from "@/components/cloudFirestore/uploadData";
 import { mealUploadType, allMealType } from "@/lib/types/types";
-import DeleteMeal from "@/components/cloudFirestore/deleteMeal";
+import DeleteData from "@/components/cloudFirestore/deleteData";
 import { GetData } from "@/components/cloudFirestore/getData";
+import { auth } from "@/lib/firebase/initFIrebase";
 
 const getMealData = async (mealTime: string) => {
   const querySnapshotLunch = await GetData(mealTime);
@@ -25,7 +26,7 @@ const getMealData = async (mealTime: string) => {
 export async function getServerSideProps() {
   const lunchItems = await getMealData("lunch");
   const dinnerItems = await getMealData("dinner");
-  
+
   return {
     props: {
       lunchItems,
@@ -64,11 +65,11 @@ export default function Home({
     }
   };
 
-  const handleDelete = async (id: string, time: string) => {
-    await DeleteMeal(id, time);
-    if (time == "lunch") {
+  const handleDelete = async (collectionName: string, id: string) => {
+    await DeleteData(collectionName, id);
+    if (collectionName == "lunch") {
       setLunchMenu(await getMealData("lunch"));
-    } else if (time == "dinner") {
+    } else if (collectionName == "dinner") {
       setDinnerMenu(await getMealData("dinner"));
     }
   };
@@ -85,6 +86,8 @@ export default function Home({
     }
     setformEl({ ...formEl, itemName: "", file: "", mealTime: "" });
   };
+
+  const user = auth.currentUser;
 
   return (
     <>
@@ -130,96 +133,97 @@ export default function Home({
             </div>
           </div>
           {/* items showing end */}
-          {/* <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"> */}
-          <div className="mt-4 flex flex-col flex-2 justify-start">
-            <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-              <p className="flex justify-center mb-8 text-4xl font-sans">
-                Add Meal Item
-              </p>
-              <form className="mb-0 space-y-6" action="#" method="POST">
-                <div>
-                  <label
-                    htmlFor="item-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Item Name
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="item-name"
-                      value={formEl.itemName}
-                      onChange={(e: any) =>
-                        setformEl({ ...formEl, itemName: e.target.value })
-                      }
-                      name="item-name"
-                      type="text"
-                      autoComplete="item-name"
-                      required
-                      className=""
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="file"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Upload Image
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      id="file"
-                      value={formEl.file}
-                      onChange={(e: any) =>
-                        setformEl({ ...formEl, file: e.target.value })
-                      }
-                      ref={inputEl}
-                      name="file"
-                      type="file"
-                      autoComplete="file"
-                      required
-                      className=""
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="meal-time"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Meal Time
-                  </label>
-                  <div className="mt-1">
-                    <select
-                      name="meal-time"
-                      value={formEl.mealTime}
-                      onChange={(e: any) =>
-                        setformEl({ ...formEl, mealTime: e.target.value })
-                      }
-                      id="meal-time"
-                      className=""
+          {user && (
+            <div className="mt-4 flex flex-col flex-2 justify-start">
+              <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+                <p className="flex justify-center mb-8 text-4xl font-sans">
+                  Add Meal Item
+                </p>
+                <form className="mb-0 space-y-6" action="#" method="POST">
+                  <div>
+                    <label
+                      htmlFor="item-name"
+                      className="block text-sm font-medium text-gray-700"
                     >
-                      <option value="">Please select time</option>
-                      <option value="lunch">Lunch</option>
-                      <option value="dinner">Dinner</option>
-                    </select>
+                      Item Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        id="item-name"
+                        value={formEl.itemName}
+                        onChange={(e: any) =>
+                          setformEl({ ...formEl, itemName: e.target.value })
+                        }
+                        name="item-name"
+                        type="text"
+                        autoComplete="item-name"
+                        required
+                        className=""
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <button
-                    type="submit"
-                    onClick={onSubmitButtonClick}
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
+                  <div>
+                    <label
+                      htmlFor="file"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Upload Image
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        id="file"
+                        value={formEl.file}
+                        onChange={(e: any) =>
+                          setformEl({ ...formEl, file: e.target.value })
+                        }
+                        ref={inputEl}
+                        name="file"
+                        type="file"
+                        autoComplete="file"
+                        required
+                        className=""
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="meal-time"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Meal Time
+                    </label>
+                    <div className="mt-1">
+                      <select
+                        name="meal-time"
+                        value={formEl.mealTime}
+                        onChange={(e: any) =>
+                          setformEl({ ...formEl, mealTime: e.target.value })
+                        }
+                        id="meal-time"
+                        className=""
+                      >
+                        <option value="">Please select time</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={onSubmitButtonClick}
+                      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-teal-100 hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Layout>
     </>
