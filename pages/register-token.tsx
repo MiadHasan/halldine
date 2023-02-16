@@ -11,7 +11,7 @@ export default function RegisterToken() {
     start: '',
     end: '',
     transactionId: '',
-    varified: false
+    verified: false
   });
 
   const onSubmitButtonClick = (e: any) => {
@@ -24,7 +24,7 @@ export default function RegisterToken() {
       start: '',
       end: '',
       transactionId: '',
-      varified: false
+      verified: false
     });
   }
 

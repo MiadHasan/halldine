@@ -22,7 +22,7 @@ export interface tokenRegistrationType {
     start: Date | string,
     end: Date | string,
     transactionId: string,
-    varified: boolean
+    verified: boolean
 }
 
 export interface reviewType {
@@ -37,4 +37,14 @@ export interface requestType {
     itemName: string,
     quantity: string,
     requestId ?: string,
+}
+
+export interface studentType {
+    studentId: string,
+    name: string,
+    email: string,
+    startDate: string,
+    endDate: string,
+    id: string,
+    transactionId: string
 }
