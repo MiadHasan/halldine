@@ -13,13 +13,13 @@ export default function Login() {
 
   const onSubmitButtonClick = async (e: any) => {
     e.preventDefault();
-    console.log(await LoginUser(formEl.email, formEl.password));
-    
+    const user = await LoginUser(formEl.email, formEl.password);
+    router.push("/");
     setformEl({
       email: '',
       password: '',
     });
-    router.push("/");
+    
   }
 
   return (
