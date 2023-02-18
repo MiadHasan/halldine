@@ -11,7 +11,12 @@ import {
 
 export default async function UploadData(
   collectionName: string,
-  data: mealUploadType | noticeType | tokenRegistrationType | reviewType | requestType
+  data:
+    | mealUploadType
+    | noticeType
+    | tokenRegistrationType
+    | reviewType
+    | requestType
 ) {
   try {
     await addDoc(collection(db, collectionName), {

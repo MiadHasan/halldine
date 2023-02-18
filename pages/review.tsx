@@ -49,7 +49,7 @@ export default function Review({ reviewData }: { reviewData: reviewType[] }) {
       title: "",
       description: "",
     });
-    setReviews(await getReviewData())
+    setReviews(await getReviewData());
   };
 
   return (

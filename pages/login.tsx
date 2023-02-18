@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 export default function Login() {
   const router = useRouter();
   const [formEl, setformEl] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const onSubmitButtonClick = async (e: any) => {
@@ -16,11 +16,10 @@ export default function Login() {
     const user = await LoginUser(formEl.email, formEl.password);
     router.push("/");
     setformEl({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
-    
-  }
+  };
 
   return (
     <>
@@ -30,9 +29,7 @@ export default function Login() {
       <Layout>
         <div className="mt-8 flex flex-row justify-center items-center">
           <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-            <p className="flex justify-center mb-8 text-4xl font-sans">
-              Login
-            </p>
+            <p className="flex justify-center mb-8 text-4xl font-sans">Login</p>
             <form className="mb-0 space-y-6" action="#" method="POST">
               <div>
                 <label

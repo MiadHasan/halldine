@@ -53,7 +53,7 @@ export default function VerifyStudents({
     };
     await UpdateData("token-registration-request", id, newData);
     setVerifyRequest(await getUnverifiedStudents());
-  }
+  };
 
   return (
     <>

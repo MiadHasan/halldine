@@ -5,28 +5,28 @@ import { useState } from "react";
 
 export default function RegisterToken() {
   const [formEl, setformEl] = useState({
-    id: '',
-    name: '',
-    email: '',
-    start: '',
-    end: '',
-    transactionId: '',
-    verified: false
+    id: "",
+    name: "",
+    email: "",
+    start: "",
+    end: "",
+    transactionId: "",
+    verified: false,
   });
 
   const onSubmitButtonClick = (e: any) => {
     e.preventDefault();
     UploadData("token-registration-request", formEl);
     setformEl({
-      id: '',
-      name: '',
-      email: '',
-      start: '',
-      end: '',
-      transactionId: '',
-      verified: false
+      id: "",
+      name: "",
+      email: "",
+      start: "",
+      end: "",
+      transactionId: "",
+      verified: false,
     });
-  }
+  };
 
   return (
     <>

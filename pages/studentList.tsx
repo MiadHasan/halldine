@@ -33,9 +33,15 @@ export async function getServerSideProps() {
   };
 }
 
-export default function StudentList({ verifiedStudents }: {verifiedStudents: studentType[]}) {
+export default function StudentList({
+  verifiedStudents,
+}: {
+  verifiedStudents: studentType[];
+}) {
   const today = new Date();
-  const totalNdm = verifiedStudents.filter((item) => new Date(item.endDate) > today).length;
+  const totalNdm = verifiedStudents.filter(
+    (item) => new Date(item.endDate) > today
+  ).length;
   return (
     <>
       <Head>
@@ -72,27 +78,27 @@ export default function StudentList({ verifiedStudents }: {verifiedStudents: stu
               <tbody className="divide-y divide-gray-100">
                 {verifiedStudents.map((item) => (
                   <tr key={item.id} className="bg-white">
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                       <p className="font-bold text-blue-500">
                         {item.studentId}
                       </p>
                     </td>
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {item.name}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {item.email}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {item.startDate}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {item.endDate}
-                  </td>
-                  <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                    {new Date(item.endDate) < new Date() ? 'NO' : 'YES'}
-                  </td>
-                </tr>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      {item.name}
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      {item.email}
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      {item.startDate}
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      {item.endDate}
+                    </td>
+                    <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                      {new Date(item.endDate) < new Date() ? "NO" : "YES"}
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>

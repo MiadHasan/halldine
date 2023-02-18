@@ -59,7 +59,6 @@ export default function Request({
     setRequests(await getRequestData());
   };
 
-  
   return (
     <>
       <Head>
@@ -70,7 +69,7 @@ export default function Request({
           <div className="mt-5 flex flex-col flex-1 justify-start items-center">
             <p className="text-4xl font-medium">Food Requests</p>
             <>
-            {requests.map((item, index) => (
+              {requests.map((item, index) => (
                 <ShowRequest
                   key={index}
                   hallName={item.hallName}
