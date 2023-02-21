@@ -1,11 +1,13 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { requestType } from "@/lib/types/types";
 import { GetData } from "@/components/cloudFirestore/getData";
 import UploadData from "@/components/cloudFirestore/uploadData";
 import ShowRequest from "@/components/showRequest";
 import DeleteData from "@/components/cloudFirestore/deleteData";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/authContext";
 
 const getRequestData = async () => {
   const querySnapshotLunch = await GetData("request");
@@ -36,6 +38,11 @@ export default function Request({
 }: {
   requestData: requestType[];
 }) {
+  const router = useRouter();
+  const { user }: any = useAuthContext();
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user, router])
   const [formEl, setformEl] = useState({
     hallName: "",
     itemName: "",
@@ -59,7 +66,7 @@ export default function Request({
     setRequests(await getRequestData());
   };
 
-  return (
+  return (user &&
     <>
       <Head>
         <title id="title">Request</title>

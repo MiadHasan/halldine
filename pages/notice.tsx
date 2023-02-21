@@ -7,6 +7,7 @@ import UploadData from "@/components/cloudFirestore/uploadData";
 import { GetData } from "@/components/cloudFirestore/getData";
 import ShowNotice from "@/components/showNotice";
 import { auth } from "@/lib/firebase/initFIrebase";
+import { useAuthContext } from "@/context/authContext";
 
 const getNoticeData = async () => {
   const querySnapshotLunch = await GetData("notice");
@@ -32,6 +33,7 @@ export async function getServerSideProps() {
 }
 
 export default function Notice({ noticeData }: { noticeData: noticeType[] }) {
+  const { user }: any = useAuthContext();
   const [formEl, setformEl] = useState({
     noticeTitle: "",
     file: "",
@@ -62,7 +64,6 @@ export default function Notice({ noticeData }: { noticeData: noticeType[] }) {
     setformEl({ ...formEl, noticeTitle: "", file: "", description: "" });
   };
 
-  const user = auth.currentUser;
   return (
     <>
       <Head>

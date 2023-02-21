@@ -3,9 +3,15 @@ import Layout from "@/components/layout";
 import { auth } from "@/lib/firebase/initFIrebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/authContext";
+import { useEffect } from "react";
 
 export default function Logout() {
   const router = useRouter();
+  const { user }: any = useAuthContext();
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user, router]);
   const logout = async () => {
     try {
       await signOut(auth);
@@ -15,10 +21,10 @@ export default function Logout() {
     }
   };
 
-  return (
+  return (user &&
     <>
       <Head>
-        <title>Login</title>
+        <title>Logout</title>
       </Head>
       <Layout>
         <div className="flex flex-col mt-6 p-4 justify-center items-center">

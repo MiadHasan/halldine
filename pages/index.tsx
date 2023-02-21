@@ -7,7 +7,7 @@ import UploadData from "@/components/cloudFirestore/uploadData";
 import { mealUploadType, allMealType } from "@/lib/types/types";
 import DeleteData from "@/components/cloudFirestore/deleteData";
 import { GetData } from "@/components/cloudFirestore/getData";
-import { auth } from "@/lib/firebase/initFIrebase";
+import { useAuthContext } from "@/context/authContext";
 
 const getMealData = async (mealTime: string) => {
   const querySnapshotLunch = await GetData(mealTime);
@@ -87,8 +87,8 @@ export default function Home({
     setformEl({ ...formEl, itemName: "", file: "", mealTime: "" });
   };
 
-  const user = auth.currentUser;
-
+  const {user}:any = useAuthContext();
+  //const user = auth.currentUser;
   return (
     <>
       <Head>

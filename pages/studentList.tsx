@@ -2,7 +2,9 @@ import Head from "next/head";
 import Layout from "@/components/layout";
 import { GetData } from "@/components/cloudFirestore/getData";
 import { studentType } from "@/lib/types/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/authContext";
 
 const getVerifiedStudents = async () => {
   const querySnapshotLunch = await GetData("token-registration-request");
@@ -38,11 +40,17 @@ export default function StudentList({
 }: {
   verifiedStudents: studentType[];
 }) {
+  const router = useRouter();
+  const { user }: any = useAuthContext();
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user, router]);
+
   const today = new Date();
   const totalNdm = verifiedStudents.filter(
     (item) => new Date(item.endDate) > today
   ).length;
-  return (
+  return (user &&
     <>
       <Head>
         <title id="title">Student List</title>

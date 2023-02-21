@@ -1,9 +1,18 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
 import UploadData from "@/components/cloudFirestore/uploadData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/context/authContext";
+import { useRouter } from "next/router";
 
 export default function RegisterToken() {
+  const router = useRouter();
+  const { user }: any = useAuthContext();
+
+  useEffect(() => {
+    if (user) router.push('/');
+  }, [user, router]);
+
   const [formEl, setformEl] = useState({
     id: "",
     name: "",
@@ -28,7 +37,7 @@ export default function RegisterToken() {
     });
   };
 
-  return (
+  return (!user &&
     <>
       <Head>
         <title>Register Token</title>

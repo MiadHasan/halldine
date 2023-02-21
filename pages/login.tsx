@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginUser from "@/components/auth/authLogin";
 import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/authContext";
 
 export default function Login() {
   const router = useRouter();
@@ -11,17 +12,23 @@ export default function Login() {
     password: "",
   });
 
+  const { user }: any = useAuthContext();
+  
+  useEffect(() => {
+    if (user) router.push('/');
+  }, [user, router]);
+  
+
   const onSubmitButtonClick = async (e: any) => {
     e.preventDefault();
-    const user = await LoginUser(formEl.email, formEl.password);
-    router.push("/");
+    await LoginUser(formEl.email, formEl.password);
     setformEl({
       email: "",
       password: "",
     });
   };
 
-  return (
+  return ( !user &&
     <>
       <Head>
         <title>Login</title>

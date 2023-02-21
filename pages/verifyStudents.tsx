@@ -2,9 +2,11 @@ import Head from "next/head";
 import Layout from "@/components/layout";
 import { GetData } from "@/components/cloudFirestore/getData";
 import { studentType } from "@/lib/types/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DeleteData from "@/components/cloudFirestore/deleteData";
 import UpdateData from "@/components/cloudFirestore/updateData";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/authContext";
 
 const getUnverifiedStudents = async () => {
   const querySnapshotLunch = await GetData("token-registration-request");
@@ -40,6 +42,12 @@ export default function VerifyStudents({
 }: {
   unverifiedStudents: studentType[];
 }) {
+  const router = useRouter();
+  const { user }: any = useAuthContext();
+  useEffect(() => {
+    if (!user) router.push('/');
+  }, [user, router]);
+
   const [verifyRequest, setVerifyRequest] = useState(unverifiedStudents);
 
   const handleDelete = async (id: string) => {
@@ -55,11 +63,10 @@ export default function VerifyStudents({
     setVerifyRequest(await getUnverifiedStudents());
   };
 
-  return (
+  return (user &&
     <>
       <Head>
         <title id="title">Student List</title>
-        {/* <script src="https://kit.fontawesome.com/75e4a8e305.js" crossorigin='anonymous'></script> */}
       </Head>
       <Layout>
         <div className="p-5 h-screen bg-gray-100">
